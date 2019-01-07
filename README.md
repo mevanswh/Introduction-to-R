@@ -1,2 +1,2 @@
-# Introduction-to-R-2017
+# Introduction-to-R
 This is a repository for the University of Arkansas BIOL480/580V

@@ -1,7 +1,3 @@
-# Change defaults for xtable to be more attractive
-# Inspired by: http://cameron.bracken.bz/sweave-xtable-booktabs
-library(xtable)
-
 xtable <- function(x, file = "", ..., rownames = FALSE){
   table <- xtable::xtable(x, ...)
   print(table, floating = F, hline.after = NULL, 

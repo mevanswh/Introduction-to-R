@@ -1,0 +1,43 @@
+#Loops and repeats
+# For Loops
+#easy loop
+for (i in 1:5) print (i^2)
+#more difficult loop
+j<-k<-0
+for (i in 1:5) {
+  j<-j+1
+  k<-k+i*j
+  print (i+j+k)}
+#Here we use a loop to write a function to calculate a factorial x
+#The "function" function provides the base code for
+#for programming new functions in r
+fac1<-function(x) {
+f<-1
+if (x<2) return (1)
+for (i in 2:x) {
+  f<-f*i}
+f}
+sapply(0:5,fac1)
+#
+#While Loop
+#
+fac2<-function(x) {
+  f<-1
+  t<-x
+  while(t>1) {
+    f<-f*t
+    t<-t-1}
+  return (f)}
+sapply(0:5,fac2)
+#
+#Repeat loop
+#
+fac3<-function(x) {
+  f<-1
+  t<-x
+  repeat {
+    if (t<2) break
+    f<-f*t
+    t<-t-1}
+  return (f) }
+sapply(0:5,fac3)

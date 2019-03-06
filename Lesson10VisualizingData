@@ -1,0 +1,88 @@
+rm(list=ls())
+#Step 1 of data analysis: visualize your data
+#Index plot  
+data<-read.csv("das.csv")
+head(data)
+with(data, plot(y))
+#Find the unusual datapoint and verify it
+with(data, which(y>10))
+which(data$y>10)
+data$y[49]
+#Let's say we have looked back at our lab book and this is a 
+#mistakenly placed decimal.  It should be 2.236754
+#We fix the value and reload
+data<-read.table("das.txt", header=T)
+with(data, plot(y))
+#Other artifacts to look for: Are data trended with order of entry?
+#Is there a pattern in the scatter from left to right?
+#Now we can check for mistakes in the explanatory variables
+#You can use the table function to show how many times 
+#each factor level appears in a particular column of the dataframe
+yields<-read.csv("fertyield.csv")
+head(yields)
+table(yields$treatment)
+which(yields$treatment=="nitogen")
+#Now you can easily correct your mistake
+#pairwise relationships for continuous variables
+pair<-read.csv("scatter.csv")
+head(pair)
+with (pair, plot(x,y,pch=21,bg="red"))
+#what interesting patterns are in the data?
+#Let's explore scatterplot options in more detail
+data1<-read.table("scatter1.txt",header = T)
+names(data1)
+head(data1)
+with(data1,plot(xv,ys))
+#you can change the color of your dots (the automatic is black)
+with(data1,plot(xv,ys,col="red"))
+#You can easily change the names on the axes using the xlab=,ylab= command.
+with(data1,plot(xv,ys,col="green",xlab = "Explanatory Variable", ylab = "Response Variable"))
+#You can easily add a fitted line to your plot
+abline(lm(ys~xv,data=data1))
+#It is also easy to add an additional plot.  First, you must create a new unique variable with the dataframe.
+data2<-read.table("scatter2.txt",header=T)
+names(data2)
+#The new points"xv2" and "ys2" are added using the points function like this:
+with(data2,points(xv2,ys2,col="blue"))
+#If you want filled circles in your plot, you can use the following
+with(data2,points(xv2,ys2,col="blue",pch=16))
+#Notice how some of the dots are almost off the scale.  The scale is set by the first plot.  R
+#won't automatically shift the scale so all the points for plot 2 are visible
+attach(data1)
+attach(data2)
+plot(c(xv,xv2),c(ys,ys2),xlab="Explanatory Variable (mg/L)", ylab="Response Variable (mg/L)",type="n")
+points(xv,ys,col="red")
+points(xv2,ys2,col="blue")
+abline(lm(ys~xv))
+abline(lm(ys2~xv2))
+#Now all the data are shown on the figure.
+#You may want to specify your own limits on the axes scale.  We can determine the appropriate scale using the range function.
+range(c(xv,xv2))
+range(c(ys,ys2))
+#Now we can enter this range information into the above code using the xlim=,ylim= commands.
+#http://www.statmethods.net/advgraphs/parameters.html--info on how to change many parameters
+plot(c(xv,xv2),c(ys,ys2),xlim=c(0,100), ylim=c(0,70), xlab="Explanatory Variable (mg/L)", ylab="Response Variable (mg/L)",type="n")
+points(xv,ys,col="red")
+points(xv2,ys2,col="blue",pch=16)
+abline(lm(ys~xv))
+abline(lm(ys2~xv2))
+#you may also use the clip function 
+#clip(0,100,15,65)
+#abline(lm(ys~xv,data=data1))
+#To insert a legend into your figure using the "legend" function.
+#The number of lines of text inside the legend box is determined by the length of the vector containing labels.  The "locator 1"
+#command can be used to allow you to select exactly where on the plot the surface of the legend box should be placed. 
+#Click the mouse button when the cursor is where yow want the top left of the legend to be.
+legend(locator(1), c("treatment", "control"), pch=c(1,16), col=c("red","blue"))
+#Section 5.2.1 page 195: Plotting symbols "pch"
+#Check out the graphic table on page 195.  There are 256 different symbols.  1 is default for plot function.  We had to 
+#choose the number 16 symbol for adding the control plot
+#The plotting symbols numbered 21-25 allow you to specify a background (fill) as bg=, and a border color seperately col=
+plot(c(xv,xv2),c(ys,ys2),xlim=c(0,100), ylim=c(0,70), xlab="Explanatory Variable (mg/L)", ylab="Response Variable (mg/L)",type="n")
+points(xv,ys,col="red",pch=21,bg="black")
+points(xv2,ys2,col="blue",pch=22, bg="black")
+abline(lm(ys~xv))
+abline(lm(ys2~xv2))
+legend(locator(1), c("treatment", "control"), pch=c(21,22), col=c("red","blue"), pt.bg=c("black","black"))
+#Section 5.2.3 adding text to scatterplots
+text(80,65,"(b)")

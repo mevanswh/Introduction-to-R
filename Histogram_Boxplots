@@ -38,3 +38,23 @@ boxplot(y, horizontal=FALSE, space=0)
 par(mfrow=c(1,1))
 #detach our previous dataset and move on to a new one
 detach(pair)
+#The default graph returned is a boxplot, when you use the "plot" command and your x variable is 
+#categorical rather than continuous.  We will use the weather.txt dataset as an example.
+weather<-read.table("SilwoodWeather.txt", header=T)
+attach(weather)
+names(weather)
+str(weather)
+#What does the "summary" output look like?
+summary(weather)
+#Notice that all vectors are numbers or integers
+#The month vector needs to be categorical, so we create a new variable that is a factor variable
+month<-factor(month)
+#now we can use that variable as the x variable, and one of the original vectors in weather, temperature
+#as the y variable with the plot command...
+plot(month,upper,ylab="daily maximum temperature",xlab="month")
+#It is difficult to get a feel for whether you might have statistically significant differences here
+#One option that can help is the notched boxplot.  Non-overlapping notches are likely to differ.
+plot(month,upper,notch=TRUE, ylab="daily maximum temperature",xlab="month")
+#
+boxplot(upper~month, notch=TRUE, ylab="daily maximum temperature",xlab="month")
+#http://www.statmethods.net/graphs/boxplot.html     

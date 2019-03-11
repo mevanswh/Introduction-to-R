@@ -1,0 +1,40 @@
+data<-read.table("das.txt", header=T)
+head(data)
+#Review: Index plot
+with(data, plot(y))
+#Basic Histogram
+with(data, hist(y))
+#The median is the middle value in a ranked odd numbered dataset
+#The median is the mean of the two middle values in a ranked
+#even numbered dataset
+#the mean is the sum of all data points divided by the number of
+#all data points
+#With normally distributed data, the mean should be 
+#close to the same value as the median
+mean(data$y)
+median(data$y)
+#Boxplot
+with(data,boxplot(y, horizontal=TRUE , ylim=c(1.9,3.0), xlab="n", frame=F))
+#Multi-panel graphs
+par(mfrow=c(2,1))
+with(data,boxplot(y, horizontal=TRUE , ylim=c(1.9,3.0), xlab="n", frame=F))
+with(data, hist(y))
+##-- Create a scatterplot with marginal histograms -----
+pair<-read.csv("scatter.csv")
+head(pair)
+attach(pair)
+nf <- layout(matrix(c(2,0,1,3),2,2,byrow = TRUE), c(3,1), c(1,3), TRUE)
+layout.show(nf)
+#par(mar=c(bottom, left, top, right)) identify which axes to clip off
+par(mar = c(3,3,1,1))
+plot(x, y, xlab = "", ylab = "")
+#top graph
+par(mar = c(0,3,1,1))
+boxplot(x, horizontal=TRUE, space=0)
+#bottom graph
+par(mar = c(3,0,1,1))
+boxplot(y, horizontal=FALSE, space=0)
+#- reset to default
+par(mfrow=c(1,1))
+#detach our previous dataset and move on to a new one
+detach(pair)

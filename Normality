@@ -1,0 +1,66 @@
+#Normality is an assumption in parametric statistics
+#Graphs can be used to assess normality and statistical tests, like Shapiro, can be used
+install.packages(c("ggplot2", "ggrepel", "ggsci", "tidyr", "purrr", "dplyr", "cowplot", "ggsignif", "gridExtra", "scales", "ggpubr", "magrittr"))
+library (ggpubr)
+library(ggpubr)
+library(magrittr)
+data<-read.table("das.txt", header=T)
+#Import a database or vector into R and use it to create a q-q plot
+#Using 'ggqqplot' is simple but requires above packages; produces a plot of theoretical quantiles
+#for x-axis and sample quantiles from a specified "vector" for y-axis; 
+#If dots fall within shaded area, they are normal.
+ggqqplot(data$y)
+#These functions produce essentially the same thing but in two steps
+qqnorm(data$y)
+qqline(data$y, lty=2)
+#shapiro normality test
+shapiro.test(data$y)
+#returns sd from normal plot; example is 10th percentile
+qnorm(0.10)
+#checking and transforming data for normality
+mussels<-read.csv("mussels.csv")
+install.packages(c("ggplot2", "ggrepel", "ggsci", "tidyr", "purrr", "dplyr", "cowplot", "ggsignif", "gridExtra"))
+install.packages(c('scales', 'gridExtra','ggpubr'))
+package(ggpubr)
+library(ggpubr)
+library(magrittr)
+#gardens data first
+ozone<-read.csv("gardens.csv")
+head(ozone)
+a<-with(ozone,c(gardenA,gardenB,gardenC))
+garden<-c("A","A","A","A","A","A","A","A","A","A","B","B","B","B","B","B","B","B","B","B","C","C","C","C","C","C","C","C","C","C")
+gardens<-data.frame(garden,a)
+lgardens<-log(gardens$a)
+sqrtgardens<-sqrt(gardens$a)
+cubegardens<-(gardens$a)^0.33
+ggqqplot(gardens$a)
+ggqqplot(cubegardens)
+qqnorm(gardens$a)
+shapiro.test(gardens$a)
+#skewdata
+skew<-read.csv("skewdata.csv")
+ggqqplot(skew$values)
+sqrtskew<-sqrt(skew$values)
+cubeskew<-(skew$values)^0.33
+quartskew<-(skew$values)^0.25
+ggqqplot(sqrtskew)
+ggqqplot(cubeskew)
+ggqqplot(quartskew)
+shapiro.test(quartskew)
+#
+qqline(gardens$a, lty=2)
+sqrt_a<-sqrt(gardens$a)
+logarithma<-log(gardens$a)
+ggqqplot(sqrt_a)
+ggqqplot(logarithma)
+ggqqplot(mussels$mussel_abundance)
+shapiro.test(mussels$mussel_abundance)
+sqrt_mussel<-(mussels$mussel_abundance)^0.5
+frt_mussel<-(mussels$mussel_abundance)^0.25
+ggqqplot(sqrt_mussel)
+shapiro.test(sqrt_mussel)
+ggqqplot(frt_mussel)
+shapiro.test(frt_mussel)
+log_mussel<-log10(mussels$mussel_abundance)
+ggqqplot(log_mussel)
+shapiro.test(log_mussel)

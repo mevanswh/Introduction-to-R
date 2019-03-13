@@ -49,9 +49,11 @@ summary(weather)
 #Notice that all vectors are numbers or integers
 #The month vector needs to be categorical, so we create a new variable that is a factor variable
 month<-factor(month)
+monthmeans<-by(upper,month,mean)
 #now we can use that variable as the x variable, and one of the original vectors in weather, temperature
 #as the y variable with the plot command...
 plot(month,upper,ylab="daily maximum temperature",xlab="month")
+points(1:12, monthmeans, pch=3,cex=0.75)
 #It is difficult to get a feel for whether you might have statistically significant differences here
 #One option that can help is the notched boxplot.  Non-overlapping notches are likely to differ.
 plot(month,upper,notch=TRUE, ylab="daily maximum temperature",xlab="month")

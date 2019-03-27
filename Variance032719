@@ -1,0 +1,32 @@
+x<-c(13,7,5,12,9,15,6,11,9,7,12)
+plot(x, ylim=c(0,20))
+y<-x-mean(x)
+sum(y)
+ozone<-read.csv("gardens.csv")
+head(ozone)
+a<-with(ozone,c(gardenA,gardenB,gardenC))
+b<-a-mean(a)
+d<-(a-mean(a))^2
+sum(b)
+sum(d)
+#variance can be calculated as
+var(x)
+var(a)
+#histogram for ozone
+#first you need a tidy data set
+garden<-c("A","A","A","A","A","A","A","A","A","A","B","B","B","B","B","B","B","B","B","B","C","C","C","C","C","C","C","C","C","C")
+gardens<-data.frame(garden,a)
+plot(gardens,garden,notch=TRUE, ylab="ozone(pphm)",xlab="garden")
+plot(gardens, garden, ylab="ozone(pphm)",xlab="garden")
+hist(gardens$a)
+#compare the means and variance of each group
+var(ozone$gardenA)
+mean(ozone$gardenA)
+var(ozone$gardenB)
+mean(ozone$gardenB)
+var(ozone$gardenC)
+mean(ozone$gardenC)
+#F-test for homogeneity of variance
+var(ozone$gardenC)/var(ozone$gardenB)
+2*(1-pf(10.667,9,9))
+var.test(ozone$gardenB,ozone$gardenC)

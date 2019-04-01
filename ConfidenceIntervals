@@ -1,0 +1,30 @@
+#set your working directory to the book data files
+gardens<-read.csv("gardens.csv")
+attach(gardens)
+sqrt(var(gardenA)/10)
+#In parentheses (alpha, dof). You need a lower value
+qt(0.025,9)
+#and an upper value
+qt(0.975,9)
+#Confidence intervals for garden b
+qt(0.975,9)*sqrt(var(gardenB)/10)
+qt(0.025,9)*sqrt(var(gardenB)/10)
+#F-test for homogeneity of variance
+var(gardens$gardenA)/var(gardens$gardenB)
+2*(1-pf(1,9,9))
+var.test(gardens$gardenA,gardens$gardenB)
+#t-test: are two means equal
+mean(gardens$gardenA)
+mean(gardens$gardenB)
+mean(gardens$gardenC)
+#compute the t-statistic
+(mean(gardens$gardenA)-mean(gardens$gardenB))/
+  sqrt(var(gardens$gardenA)/10 +var(gardens$gardenB)/10)
+#derive the probability value
+#Two-tailed: ha=hb
+2*pt(-3.674235,18)
+#One-tailed: ha<hb
+pt(-3.674235,18)
+#canned test
+t.test(gardens$gardenA,gardens$gardenB,var.equal=TRUE,paired=FALSE)
+detach(gardens)

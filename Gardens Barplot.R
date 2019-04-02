@@ -35,6 +35,7 @@ barplot(barmatrix[,1],main = "Title of Bar Graph", ylab = "Y Axis Label", xlab =
 bplot<-barplot(barmatrix[,1],main = "Title of Bar Graph", ylab = "Y Axis Label", xlab = "X Axis Label",names.arg = c("A","B","C"),col="green")
 #now you can add the error bars. Notice that the arguments call up the name of the barplot to put the bars onto, then it uses the original vectors to actually create the positive and negative ends of the bars.
 segments(bplot,meanvec-sevec,bplot,meanvec+sevec,lwd = 1.5)
+#add the flat ends instead of arrow points to the ends of the error bars
 arrows(bplot,meanvec-sevec,bplot,meanvec+sevec,lwd = 1.5, angle = 90,code = 3,length = 0.05)
 #it appears that some of the positive ends of the error bars are missing, but that is because of the limitations of the y-axix. The y-axis is set to a max of the biggest bar in the plot. The parameters will have to be reset in order to see the rest of the error bars.
 

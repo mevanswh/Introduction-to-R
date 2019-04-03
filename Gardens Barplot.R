@@ -41,4 +41,21 @@ segments(bplot,meanvec-sevec,bplot,meanvec+sevec,lwd = 1.5)
 #use 'arrows' to add the flat ends to the bars
 arrows(bplot,meanvec-sevec,bplot,meanvec+sevec,lwd = 1.5, angle = 90,code = 3,length = 0.05)
 
+#now create a bar graph using ggplot
+library(ggplot2)
+#first, ggplot will want x and y values determined. Our x values are categorical and we can make a vector for them
+namesvec<-c("A","B","C")
+#now we can bind our categorical values vector to our means and standard errors vectors to form a new data frame since ggplot needs a data frame rather than a matrix
+ggbarframe<-data.frame(namesvec,meanvec,sevec)
+#give the plot a name to fix it in the environment for easy recall
+ggbplot<- ggplot(data = ggbarframe, aes(x=namesvec,y=meanvec))+geom_col()
+ggbplot
+#to make horizontal bars...
+ggbplot+coord_flip()
+#replot the verticle bars with a white background
+ggbplot+theme_minimal()
+#learn more about ggplot2 and other aesthetics under the 'Help' tab.
+#add standard error bars to ggplot bar graph
+ggbplot+theme_minimal()+geom_errorbar(aes(ymin=ggbarframe$meanvec-ggbarframe$sevec, ymax=ggbarframe$meanvec+ggbarframe$sevec), width=.2,position=position_dodge(.9))
+
   

@@ -1,0 +1,20 @@
+#Wilcoxin rank-sum test statistic
+#first you need a tidy data set with only treatments B and C
+ozone<-read.csv("gardens.csv")
+data<-with(ozone,c(gardenB,gardenC))
+garden<-c(rep("B",10),rep("C",10))
+gardens<-data.frame(garden,data)
+#write.csv(gardens, file="C://Users//mevanswh//Desktop//rdata//gardenssub.csv")
+#sort the gardens data by data values, then by garden values
+attach(gardens)
+gardens<-gardens[order(data),]
+#creates a new column "ranked" in gardens from computed ranks
+gardens$ranked<-rank(gardens$data)
+summary(gardens)
+gardens$garden<-as.factor(gardens$garden)
+write.csv(gardens, file="C://Users//mevanswh//Desktop//rdata//gardenssub.csv")
+#use tapply to get the sum for each treatment
+tapply(gardens$ranked,list(gardens$garden),sum)
+#use the smallest sum and compare it to the W critical value
+#the following is the canned function in R
+wilcox.test(ozone$gardenB,ozone$gardenC)

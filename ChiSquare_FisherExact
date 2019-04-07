@@ -1,0 +1,26 @@
+#obtain the chi-square critical value
+qchisq(0.95,1)
+#Chi square with two groups only
+sexobs<-c(40,50)
+sexexp<-c(0.50,0.50)
+chisq.test(x=sexobs,p=sexexp)
+#Chi square with >2 groups
+counts<-matrix(c(38,11,14,51),nrow=2)
+qchisq(0.95,1)
+chisq.test(counts, correct=F) 
+#Fisher's exact test
+#by hand
+factorial(8)*factorial(12)*factorial(10)*factorial(10)/
+  (factorial(6)*factorial(2)*factorial(4)*factorial(8)*factorial(20))
+factorial(8)*factorial(12)*factorial(10)*factorial(10)/
+  (factorial(7)*factorial(3)*factorial(1)*factorial(9)*factorial(20))
+factorial(8)*factorial(12)*factorial(10)*factorial(10)/
+  (factorial(8)*factorial(2)*factorial(0)*factorial(10)*factorial(20))
+#now you add the 3 probabilities and take it times 2 to 
+#allow for the same number of extremes in the opposite direction
+2*(0.07501786+0.009526078+0.0003572279)
+#canned fishers
+x<-as.matrix(c(6,2,4,8))
+dim(x)<-c(2,2)
+x
+fisher.test(x)

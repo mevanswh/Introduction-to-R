@@ -1,0 +1,19 @@
+ozone<-read.csv("gardens.csv")
+data<-with(ozone,c(gardenA,gardenB,gardenC))
+logdata<-log(data)
+garden<-c(rep("A",10),rep("B",10),rep("C",10))
+gardens<-data.frame(garden,data,logdata)
+gardens$garden<-as.factor(gardens$garden)
+#F-test for homogeneity of variance
+gardenvar<-aggregate(gardens$logdata, list(gardens$garden), var)
+gardenvar[1,2]/gardenvar[2,2]
+2*(1-pf(3.5498,9,9))
+gardenvar[3,2]/gardenvar[1,2]
+2*(1-pf(2.861512,9,9))
+gardenvar[3,2]/gardenvar[2,2]
+2*(1-pf(10.1578,9,9))
+#ANOVA on gardens
+anova(lm(logdata~garden), data=gardens)
+pairwise.t.test(gardens$logdata, gardens$garden, p.adjust.method = "bonferroni")
+#KruskalWallace nonparametric ANOVA
+kruskal.test(logdata~garden, data=gardens)

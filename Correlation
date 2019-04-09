@@ -1,0 +1,67 @@
+data<-read.csv("twosample.csv")
+attach(data)
+head(data)
+nf <- layout(matrix(c(2,0,1,3),2,2,byrow = TRUE), c(3,1), c(1,3), TRUE)
+layout.show(nf)
+#par(mar=c(bottom, left, top, right)) identify which axes to clip off
+par(mar = c(3,3,1,1))
+plot(x, y, xlab = "", ylab = "")
+#top graph
+par(mar = c(0,3,1,1))
+boxplot(x, horizontal=TRUE, space=0)
+#bottom graph
+par(mar = c(3,0,1,1))
+boxplot(y, horizontal=FALSE, space=0)
+#- reset to default
+par(mfrow=c(1,1))
+#Do these look bivariate normal?
+#Let's calculate a correlation coefficient
+#covariance is calculated by
+var(x,y)
+#variance for each individual variable
+var(x)
+var(y)
+#now the Pearson's coefficient
+var(x,y)/sqrt(var(x)*var(y))
+#you can also use the canned function
+cor(x,y)
+#with cor.test you can produce Pearson correlations with method="p"
+#Nonparametric options like Spearman rank ("s") and Kendall's tau ("k")are also available
+cor.test(x,y,alternative="two.sided", method="p", exact=NULL)
+cor.test(x,y,alternative="two.sided", method="s", exact=NULL)
+cor.test(x,y,alternative="two.sided", method="k", exact=NULL)
+#making complex multipanel plots
+library(ggplot2) 
+library(dplyr) 
+library(gridExtra) 
+library(ggthemes) 
+library(RColorBrewer)
+data<-read.csv("gasdata.csv")
+head(data)
+#corr function will provide a table of coefficents 
+#and p-values for variables 1-11 that could be
+#exported to excel to make a nice table for a
+#manuscript or talk
+corrtable<-cor(data[,1:11])
+#pairs function will provide a multipanel graph
+pairs(data[,1:11])
+#table and scatterplot function
+panel.cor <- function(x, y, digits = 2, cex.cor, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  # correlation coefficient
+  r <- cor(x, y)
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste("r= ", txt, sep = "")
+  text(0.5, 0.6, txt)
+  
+  # p-value calculation
+  p <- cor.test(x, y)$p.value
+  txt2 <- format(c(p, 0.123456789), digits = digits)[1]
+  txt2 <- paste("p= ", txt2, sep = "")
+  if(p<0.01) txt2 <- paste("p= ", "<0.01", sep = "")
+  text(0.5, 0.4, txt2)
+}
+
+pairs(data, upper.panel = panel.cor)

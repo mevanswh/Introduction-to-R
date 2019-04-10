@@ -65,3 +65,16 @@ panel.cor <- function(x, y, digits = 2, cex.cor, ...)
 }
 
 pairs(data, upper.panel = panel.cor)
+#linear regression provides statistically-estimated
+#constants for an equation, p-values for constants,
+#and an R-square that estimates the proportion of variation
+#explained by the model.
+datareg<-lm(y~x, data=data)
+summary(datareg)
+#linear regression provides statistically-estimated
+#constants for an equation, p-values for constants,
+#and an R-square that estimates the proportion of variation
+#explained by the model.
+datareg<-lm(y~x, data=data)
+summary(datareg)
+

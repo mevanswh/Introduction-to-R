@@ -1,4 +1,4 @@
-#First Lesson Introduction to R 2017
+#First Lesson
 
 #1.  Install packages used in the textbook
 

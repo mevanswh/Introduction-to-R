@@ -1,4 +1,4 @@
-#Introduction to R 090815
+#Introduction to R
 #1.Make an R script in R editor.  First, open the R editor
 #Annotate it with your name and date
 #Reset R's Brain

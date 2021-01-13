@@ -1,4 +1,9 @@
 #First Lesson
+#To update R or install R for macs, go to https://cloud.r-project.org/bin/macosx/
+#To update R on a PC, install "installr" package
+#install.packages("installr")
+#library(installr)
+#update(R)
 
 #1.  Install packages used in the textbook
 

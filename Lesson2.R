@@ -83,28 +83,30 @@ ceiling(-5.7)
 
 #Significant digits: these are not exactly the same as the number of decimal places.
 #It applies to larger numbers too:
-
+#
 signif(12345678,4)
 signif(12345678,5) 
 signif(12345678,6)
-
-
+#
+#
 #Factors and functions for dealing with factors:
 #We are going to bring in some data.  First, you need to determine where your working directory is:
 getwd()
-
+#
 #This will likely differ from the working directory with the data file
-#To set the working directory, use setwd command. This may differ slightly for macs.  In Mac, go to the
+#To set the working directory, use setwd command.
+setwd("/Users/mevanswh/Documents/therbook")
+#This may differ slightly for macs.  In Mac Rstudio, go to the
 #MISC toolbar option and choose change working directory in the dropdown menu:
-
-setwd("C:\\Users\\mevanswh\\Desktop\\rdata")
+#For PC
+#setwd("C:\\Users\\mevanswh\\Desktop\\rdata")
 #You can check the files in your directory by using:
 dir()
-
+#
 #Double backslashes must be used in the directory assignment and the directory
 #assignment must be in quotes:
-
-
+#
+#
 data<-read.table("daphnia.txt",header=T)
 attach(data)
 head(data)

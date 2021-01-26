@@ -6,10 +6,11 @@ rm(list=ls())
 #Get the current working directory using getwd
 getwd()
 #Set the current working directory to your rdata file in PC
-setwd ("C://Users//mevanswh//Desktop//rdata")
+#setwd ("C://Users//mevanswh//Desktop//rdata")
 #For Macs, use the MISC selection on the top menu, select change working directory, then select the file.
 #or use setwd command with the correct paht.  An example is in the next line.
 #setwd("/Users/jblack/rdata")
+setwd("/Users/mevanswh/Documents/therbook")
 #create a variable named data and define it as the daphnia.txt file
 data<-read.table("daphnia.txt",header=T)
 #attach the variable data

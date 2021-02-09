@@ -1,4 +1,5 @@
-setwd ("C://Users//mevanswh//Desktop//rdata")
+#setwd ("C://Users//mevanswh//Desktop//rdata")
+setwd("~/Documents/therbook")
 library(foreign)
 library(stringr)
 install.packages("plyr")

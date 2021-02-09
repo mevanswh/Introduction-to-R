@@ -80,7 +80,8 @@ B<-apply(A,2,function(x) x^2+x)
 #Let's start with a clean slate
 rm(list=ls())
 #We will learn how to sort and manipulate databases
-setwd ("C://Users//mevanswh//Desktop//rdata")
+#setwd ("C://Users//mevanswh//Desktop//rdata")
+setwd ("~/Documents/therbook")
 worms<-read.table("worms.txt",header = T)
 #notice the set up of this database.
 #all measures reflecting the same variable are listed in one column

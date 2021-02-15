@@ -1,7 +1,9 @@
-data<-read.table("das.txt", header=T)
-head(data)
+data1<-read.table("das1.txt", header=T)
+head(data1)
 #Review: Index plot
-with(data, plot(y))
+with(data1, plot(y))
+#Corrected the outlier and named the file das.txt
+data<-read.table("das.txt", header=T)data<-read.table("das.txt", header=T)
 #Basic Histogram
 with(data, hist(y))
 #The median is the middle value in a ranked odd numbered dataset
@@ -60,3 +62,21 @@ plot(month,upper,notch=TRUE, ylab="daily maximum temperature",xlab="month")
 #
 boxplot(upper~month, notch=TRUE, ylab="daily maximum temperature",xlab="month")
 #http://www.statmethods.net/graphs/boxplot.html     
+#Zscores
+pnorm(-1.25)
+qnorm(0.1056498)
+#Q-Qplots
+install.packages(c("ggplot2", "ggrepel", "ggsci", "tidyr", "purrr", "dplyr", "cowplot", "ggsignif", "gridExtra", "scales", "ggpubr", "magrittr"))
+library(ggplot2)
+library(ggrepel)
+library(ggsci)
+library(tidyr)
+library(purrr)
+library(dplyr)
+library(cowplot)
+library(ggsignif)
+library(gridExtra)
+library(scales)
+library(ggpubr)
+library(magrittr)
+ggqqplot(data$y)

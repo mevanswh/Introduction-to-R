@@ -38,9 +38,7 @@ religion$reltrad[religion$q16 == " Atheist (do not believe in God) "] <- "Atheis
 religion$reltrad[religion$q16 == " Agnostic (not sure if there is a God) "] <- "Agnostic"
 #trims whitespace from start and end of string
 religion$reltrad <- str_trim(religion$reltrad)
-#Vectorised reltrad**
 religion$reltrad <- str_replace_all(religion$reltrad, " \\(.*?\\)", "")
-#not interpretable ones are still in reltrad...doublecheck removed later
 #now we move to our next vector 1)shortens the entries
 #automatically assigns income to a character vector
 religion$income <- c("Less than $10,000" = "<$10k", 
@@ -66,3 +64,4 @@ counts <- count(religion, c("reltrad", "income"))
 #We want to change the name of column one from"reltrad"
 #to "religion"
 names(counts)[1] <- "religion"
+xtable(counts[1:10, ], file = "pew-clean.tex")

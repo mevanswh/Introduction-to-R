@@ -64,4 +64,3 @@ counts <- count(religion, c("reltrad", "income"))
 #We want to change the name of column one from"reltrad"
 #to "religion"
 names(counts)[1] <- "religion"
-xtable(counts[1:10, ], file = "pew-clean.tex")

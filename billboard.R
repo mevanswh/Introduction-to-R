@@ -46,4 +46,3 @@ xtable(narrow, "billboard-song.tex")
 rank <- join(clean, song, match = "first")
 rank <- rank[c("id", "date", "rank")]
 rank$date <- as.character(rank$date)
-xtable(rank[1:15, ], "billboard-rank.tex")

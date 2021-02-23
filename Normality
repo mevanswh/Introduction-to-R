@@ -2,7 +2,7 @@
 #Graphs can be used to assess normality and statistical tests, like Shapiro, can be used
 install.packages(c("ggplot2", "ggrepel", "ggsci", "tidyr", "purrr", "dplyr", "cowplot", "ggsignif", "gridExtra", "scales", "ggpubr", "magrittr"))
 library (ggpubr)
-library(ggpubr)
+library(ggplot2)
 library(magrittr)
 data<-read.table("das.txt", header=T)
 #Import a database or vector into R and use it to create a q-q plot
@@ -19,11 +19,6 @@ shapiro.test(data$y)
 qnorm(0.10)
 #checking and transforming data for normality
 mussels<-read.csv("mussels.csv")
-install.packages(c("ggplot2", "ggrepel", "ggsci", "tidyr", "purrr", "dplyr", "cowplot", "ggsignif", "gridExtra"))
-install.packages(c('scales', 'gridExtra','ggpubr'))
-package(ggpubr)
-library(ggpubr)
-library(magrittr)
 #gardens data first
 ozone<-read.csv("gardens.csv")
 head(ozone)

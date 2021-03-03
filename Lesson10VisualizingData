@@ -1,4 +1,9 @@
 rm(list=ls())
+setwd("~Documents/therbook")
+library(plyr)
+library(reshape2)
+library(foreign)
+library(stringr)
 #Step 1 of data analysis: visualize your data
 #Index plot  
 data<-read.csv("das.csv")
@@ -8,10 +13,8 @@ with(data, plot(y))
 with(data, which(y>10))
 which(data$y>10)
 data$y[49]
-#Let's say we have looked back at our lab book and this is a 
-#mistakenly placed decimal.  It should be 2.236754
-#We fix the value and reload
-data<-read.table("das.txt", header=T)
+data$y<-str_replace(data$y,"22.36754","2.236754")
+data$y[49]
 with(data, plot(y))
 #Other artifacts to look for: Are data trended with order of entry?
 #Is there a pattern in the scatter from left to right?
@@ -22,6 +25,8 @@ yields<-read.csv("fertyield.csv")
 head(yields)
 table(yields$treatment)
 which(yields$treatment=="nitogen")
+yields$treatment<-str_replace(yields$treatment,"nitogen","nitrogen")
+table(yields$treatment)
 #Now you can easily correct your mistake
 #pairwise relationships for continuous variables
 pair<-read.csv("scatter.csv")

@@ -9,6 +9,19 @@ qt(0.975,9)
 #Confidence intervals for garden b
 qt(0.975,9)*sqrt(var(gardenB)/10)
 qt(0.025,9)*sqrt(var(gardenB)/10)
+#Bootstrapping CI
+skew<-read.csv("skewdata.csv")
+names(skew)
+attach(skew)
+detach(skew)
+plot(c(0,30),c(0,60), type="n", xlab="Sample size", ylab="Confidence Interval")
+for (k in seq(5,30,3)){
+  a<-numeric(10000)
+  for (i in 1:10000){
+    a[i]<-mean(sample(skew$values,k,replace=T))
+  }
+  points (c(k,k), quantile(a,c(.025,.975)), type="b", pch=21, bg="red")
+}
 #F-test for homogeneity of variance
 var(gardens$gardenA)/var(gardens$gardenB)
 2*(1-pf(1,9,9))
@@ -22,9 +35,9 @@ mean(gardens$gardenC)
   sqrt(var(gardens$gardenA)/10 +var(gardens$gardenB)/10)
 #derive the probability value
 #Two-tailed: ha=hb
-2*pt(-3.674235,18)
+2*pt(-3.872983,18)
 #One-tailed: ha<hb
-pt(-3.674235,18)
+pt(-3.872983,18)
 #canned test
 t.test(gardens$gardenA,gardens$gardenB,var.equal=TRUE,paired=FALSE)
 detach(gardens)

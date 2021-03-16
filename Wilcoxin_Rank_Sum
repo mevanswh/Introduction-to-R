@@ -6,7 +6,6 @@ garden<-c(rep("B",10),rep("C",10))
 gardens<-data.frame(garden,data)
 #write.csv(gardens, file="C://Users//mevanswh//Desktop//rdata//gardenssub.csv")
 #sort the gardens data by data values, then by garden values
-attach(gardens)
 gardens<-gardens[order(data),]
 #creates a new column "ranked" in gardens from computed ranks
 gardens$ranked<-rank(gardens$data)

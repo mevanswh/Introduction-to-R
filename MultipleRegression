@@ -1,0 +1,73 @@
+install.packages("nlme")
+library(nlme)
+library(mgcv)
+ozone.pollution<-read.table("ozone.data.txt", header=T)
+attach(ozone.pollution)
+names(ozone.pollution)
+#How is ozone related to the intensity of solar radiation, air temperature,
+#and wind speed?
+pairs(ozone.pollution, panel=panel.smooth)
+#Red lines are lowess smooth curves
+#There may be some significat curvature. Run to GAMs
+par(mfrow=c(2,2))
+model<-gam(ozone~s(rad)+s(temp)+s(wind))
+plot(model)
+#This model used non-parametric smoothers in a 
+#general additive model. CIs around lines suggest 
+#curvature relationships are real. So quadratic terms
+#for temperature and wind should be in the model.
+#Tree models can help us determine whether interactions
+#might be significant
+library(tree)
+model<-tree(ozone~.,data=ozone.pollution)
+par(mfrow=c(1,1))
+plot(model)
+text(model)
+#The lengths of the branches in the tree relates to the 
+#amount of deviance explained. Temperature is most important.
+#It has an interaction with wind. There is a smaller interaction
+#with wind and radiation and temp and radiation.
+w2<-wind^2
+t2<-temp^2
+r2<-rad^2
+tr<-temp*rad
+tw<-temp*wind
+wr<-wind*rad
+wtr<-wind*temp*rad
+model1<-lm(ozone~wind+rad+temp+w2+t2+r2+tr+tw+wr+wtr)
+summary(model1)
+#It is best to remove variables manually than to use
+#the function"step" because this function is prone to remove
+#main effects that are still present in interactions or
+#the linear parts of quadratic terms.
+#Start by removing the highest order interaction
+model2<-update(model1,~.-wtr)
+summary(model2)
+#now the next least significant term is r2
+model3<-update(model2,~.-r2)
+summary(model3)
+model4<-update(model3,~.-tr)
+summary(model4)
+model5<-update(model4,~.-tw)
+summary(model5)
+model6<-update(model5,~.-wr)
+summary(model6)
+#Now that we have parsed down to a simpler model and all terms
+#have p-values<0.05, let's check the model diagnostics.
+par(mfrow=c(2,2))
+plot(model6)
+#It looks like variance is increasing and the errors are not
+#normal.So let's try transforming the response variable.
+model7<-lm(log(ozone) ~ rad+temp+wind+t2+w2+r2+wr+tr+tw+wtr)
+summary(model7)
+model8<-update(model7,~.-wtr)
+summary(model8)
+model9<-update(model8,~.-tr)
+summary(model9)
+model10<-update(model9,~.-tw)
+summary(model10)
+model11<-update(model10,~.-t2)
+summary(model11)
+model12<-update(model11,~.-wr)
+summary(model12)
+plot(model12)

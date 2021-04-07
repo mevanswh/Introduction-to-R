@@ -1,3 +1,53 @@
+results<-read.table("yields.txt", header=T)
+attach(results)
+detach(results)
+sapply(list(results$sand,results$clay,results$loam),mean)
+#we need a tidy dataframe to run the ANOVA
+(frame<-stack(results))
+names(frame)<-c("yield", "soil")
+framesvar<-aggregate(frame$yield,list(frame$soil),var)
+#homogeneity of variance
+framesvar[2,2]/framesvar[1,2]
+2*(1-pf(1.226749,9,9))
+framesvar[1,2]/framesvar[3,2]
+2*(1-pf(1.76131,9,9))
+framesvar[2,2]/framesvar[3,2]
+2*(1-pf(2.160686,9,9))
+#no evidence of heteroscedasticity
+#normality
+shapiro.test(frame$yield)
+bartlett.test(frame$yield, frame$soil)
+plot(frame$yield~frame$soil, xlab="Soil Type", ylab="Yield (g/m^2)")
+#calculate Total Variation (SSY))
+sum((frame$yield-mean(frame$yield))^2)
+#Calculate Variation not explained by model (SSE)
+results$sand-mean(results$sand)
+results$clay-mean(results$clay)
+results$loam-mean(results$loam)
+sum((results$sand-mean(results$sand))^2)
+sum((results$clay-mean(results$clay))^2)
+sum((results$loam-mean(results$loam))^2)
+sum(sapply(list(results$sand,results$clay,results$loam), function(x) sum((x-mean(x))^2)))
+#Variation explained by model (treatment SS) is found by difference SSY=SSA+SSE
+#So 414.7-315.5
+414.7-315.5
+#MSE estunate: EAch soil type has 10 replicates so DOF=10-1, there are 3 treatments. So
+#9*3=27 dof
+315.5/27
+#for calculating MSA (Treatment Error(SSA)/3-1)
+99.2/2
+#Fratio
+49.6/11.68519
+#Overall model DOF for SSY is n-1, so MSE=SSY/30-1
+#Fcrit
+qf(0.95,2,27)
+#p-value
+1-pf(4.24,2,27)
+model1<-aov(frame$yield~frame$soil)
+summary(model1)
+par(mfrow=c(2,2))
+plot(model1)
+#second example
 ozone<-read.csv("gardens.csv")
 data<-with(ozone,c(gardenA,gardenB,gardenC))
 logdata<-log(data)

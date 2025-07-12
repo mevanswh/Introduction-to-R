@@ -1,0 +1,104 @@
+rm(list=ls()) 
+getwd()
+setwd("C:/Users/mevanswh/Documents/salt_2025")
+week0<-read.table("chla_cobbles_week_0.txt",header=T)
+week4<-read.table("chla_cobbles_week_4.txt",header=T)
+week6<-read.table("chla_cobbles_week_6.txt",header=T)
+#normality of raw chla
+shapiro.test(week0$chla)
+shapiro.test(week4$chla)
+shapiro.test(week6$chla)
+qqnorm(week0$chla)
+qqline(week0$Chla, lty=2)
+#transformations
+week0chla1<-week0$chla_1
+week4chla1<-week4$chla_1
+week6chla1<-week6$chla_1
+week0chla10<-week0$chla_10
+week4chla10<-week4$chla_10
+week6chla10<-week6$chla_10
+lweek0chla1<-log(week0chla1)
+lweek4chla1<-log(week4chla1)
+lweek6chla1<-log(week6chla1)
+sqrtweek0chla1<-sqrt(week0chla1)
+cubeweek0chla1<-(week0chla1)^0.33
+quartweek0chla1<-(week0chla1)^0.25
+lweek0chla10<-log(week0chla10)
+sqrtweek0chla10<-sqrt(week0chla10)
+cubeweek0chla10<-(week0chla10)^0.33
+quartweek0chla10<-(week0chla10)^0.25
+#normality
+qqnorm(lweek0chla1)
+qqline(lweek0chla1, lty=2)
+qqnorm(sqrtweek0chla1)
+qqline(sqrtweek0chla1, lty=2)
+qqnorm(cubeweek0chla1)
+qqline(cubeweek0chla1, lty=2)
+qqnorm(quartweek0chla1)
+qqline(quartweek0chla1, lty=2)
+qqnorm(lweek0chla10)
+qqline(lweek0chla10, lty=2)
+qqnorm(sqrtweek0chla10)
+qqline(sqrtweek0chla10, lty=2)
+qqnorm(cubeweek0chla10)
+qqline(cubeweek0chla10, lty=2)
+qqnorm(quartweek0chla10)
+qqline(quartweek0chla10, lty=2)
+shapiro.test(lweek0chla1)
+shapiro.test(lweek0chla10)
+shapiro.test(sqrtweek0chla1)
+shapiro.test(sqrtweek0chla10)
+shapiro.test(cubeweek0chla1)
+shapiro.test(cubeweek0chla10)
+shapiro.test(quartweek0chla1)
+shapiro.test(quartweek0chla10)
+#The transfomation of log (chla+1) yielded the most normal data for week 0.
+shapiro.test(lweek4chla1)
+shapiro.test(lweek6chla1)
+#bind the transformed column to each database; command is rbind (row) or cbind (column)
+lweek0<-cbind(week0,lweek0chla1)
+lweek4<-cbind(week4, lweek4chla1)
+lweek6<-cbind(week6, lweek6chla1)
+#boxplot
+plot(Block,chla, ylab = "Chlorophyll a (ug/cm2)", xlab = "Block")
+plot(Week,chla, ylab = "Chlorophyll a (ug/cm2)", xlab = "Week")
+#install packages for block anova
+if(!require(psych)){install.packages("psych")}
+if(!require(FSA)){install.packages("FSA")}
+if(!require(ggplot2)){install.packages("ggplot2")}
+if(!require(car)){install.packages("car")}
+if(!require(multcompView)){install.packages("multcompView")}
+if(!require(lsmeans)){install.packages("lsmeans")}
+if(!require(rcompanion)){install.packages("rcompanion")}
+#conduct linear model
+modelweek0=lm(lweek0chla1~Block + Trt, data=lweek0)
+summary(modelweek0)
+modelweek4=lm(lweek4chla1~Block + Trt, data=lweek4)
+summary(modelweek4)
+modelweek6=lm(lweek6chla1~Block + Trt, data=lweek6)
+summary(modelweek6)
+#conduct anova
+library (car)
+Anova(modelweek0, type="II")
+Anova(modelweek4, type="II")
+Anova(modelweek6, type="II")
+Anova(modelweek0, type="III")
+Anova(modelweek4, type="III")
+Anova(modelweek6, type="III")
+#histogram of residuals
+x<-residuals(modelweek0)
+library(rcompanion)
+plotNormalHistogram(x)
+plot(fitted(modelweek0),
+     residuals(modelweek0))
+plot(modelweek0)
+#multiple comparisons tukeys adjusted lsmeans
+library(multcompView)
+
+library(lsmeans)
+
+marginal = lsmeans(modelweek0,
+                   ~ Trt)
+
+pairs(marginal,
+      adjust="tukey")
